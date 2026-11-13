@@ -1,0 +1,138 @@
+rules_version = '2';
+
+// ---------------------------------------------------------------------------
+// Firestore security rules
+//
+//   EventSignUps : public form can CREATE a signup and GET one document
+//                  (doc ID = lowercased email). Duplicate emails are
+//                  explicitly rejected. RegistrationID (EVE-000) is built
+//                  by the form from the counter during submission.
+//                  Admins get full read/write (flip hasAttended / EmailSent).
+//
+//   Counters     : Counters/eventSignup holds currentValue = the last used
+//                  ID number. The form reads it and may only advance it by
+//                  exactly one; admins may bootstrap / reset counters.
+//
+//   AdminUsers   : only authenticated admins. Public has zero access.
+//                  Document IDs are the Firebase Auth UIDs of the admins.
+// ---------------------------------------------------------------------------
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /* ------------------------------ helpers ------------------------------ */
+
+    function validEmail(email) {
+      return email is string
+        && email.size() > 0
+        && email.size() <= 254
+        && email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$');
+    }
+
+    // Full document shape. RegistrationID is optional here because this
+    // validator is shared with admin writes; the public create rule
+    // additionally REQUIRES it in EVE-000 format.
+    function validSignupData(d) {
+      return d.keys().hasOnly(['RegistrationID', 'Name', 'Age', 'Email', 'EmailSent', 'hasAttended'])
+        && d.keys().hasAll(['Name', 'Age', 'Email', 'EmailSent', 'hasAttended'])
+        && d.Name is string
+        && d.Name.size() > 0
+        && d.Name.size() <= 100
+        && d.Age is number
+        && d.Age >= 1
+        && d.Age <= 120
+        && validEmail(d.Email)
+        && d.EmailSent is bool
+        && d.hasAttended is bool
+        && (!('RegistrationID' in d.keys())
+            || (d.RegistrationID is string
+                && (d.RegistrationID == ''
+                    || d.RegistrationID.matches('^EVE-[0-9]{3,}$'))));
+    }
+
+    // Caller is signed in with Firebase Auth AND has an AdminUsers profile
+    // document (doc ID == auth UID) whose Email matches the verified
+    // auth email. Anonymous / unauthenticated callers can never pass this.
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/AdminUsers/$(request.auth.uid))
+        && get(/databases/$(database)/documents/AdminUsers/$(request.auth.uid)).data.Email
+             == request.auth.token.email;
+    }
+
+    /* ---------------------------- EventSignUps --------------------------- */
+
+    match /EventSignUps/{signupId} {
+
+      // PUBLIC: read ONE signup by document ID (= lowercased email).
+      // Used by the form to answer "is this email already registered?".
+      // Note: a public query/list is deliberately NOT allowed.
+      allow get: if true;
+
+      // PUBLIC: create a new signup from the form.
+      //  - RegistrationID is REQUIRED, EVE-000 style (the form builds it
+      //    from Counters/eventSignup during submission)
+      //  - EmailSent / hasAttended are forced to start as false
+      //  - DUPLICATE REJECTION: the explicit !exists() check below denies
+      //    the write whenever that email is already present. Doc ID == email
+      //    also enforces it natively: a second write to the same email is an
+      //    UPDATE, and the public has no update permission. Two layers.
+      allow create: if validSignupData(request.resource.data)
+        && 'RegistrationID' in request.resource.data.keys()
+        && request.resource.data.RegistrationID.matches('^EVE-[0-9]{3,}$')
+        && request.resource.data.EmailSent == false
+        && request.resource.data.hasAttended == false
+        && signupId == request.resource.data.Email
+        && !exists(/databases/$(database)/documents/EventSignUps/$(request.resource.data.Email));
+
+      // No public list / update / delete  ->  implicit deny.
+
+      // ADMINS: full read/write.
+      allow list: if isAdmin();
+
+      allow update: if isAdmin()
+        && validSignupData(request.resource.data)
+        && request.resource.data.Email == resource.data.Email;
+
+      allow create: if isAdmin()
+        && validSignupData(request.resource.data)
+        && signupId == request.resource.data.Email;
+
+      allow delete: if isAdmin();
+    }
+
+    /* ------------------------------ Counters ----------------------------- */
+
+    match /Counters/{counterId} {
+      // Doc shape:  Counters/eventSignup  ->  { currentValue: <number> }
+      // currentValue = the last used ID number (seed 0 -> first ID EVE-001).
+
+      // PUBLIC: read ONLY this counter doc so the form can build the next
+      // RegistrationID. Any other counter document stays private.
+      allow get: if counterId == 'eventSignup';
+
+      // PUBLIC: advance the counter by EXACTLY one and touch nothing else.
+      // The public can never reset it, jump it ahead, or overwrite fields.
+      // Pair this with the signup create inside ONE runTransaction (see
+      // client snippet) so the number and the signup stay consistent.
+      allow update: if counterId == 'eventSignup'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['currentValue'])
+        && request.resource.data.currentValue == resource.data.currentValue + 1;
+
+      // No public create / delete / list  ->  implicit deny.
+
+      // ADMINS: full control (bootstrap, reset, more counters later).
+      allow read, write: if isAdmin();
+    }
+
+    /* ----------------------------- AdminUsers ---------------------------- */
+
+    match /AdminUsers/{adminId} {
+      // Only authenticated admins can read or write here.
+      // The public has NO access at all (implicit deny) - the password
+      // hashes are never exposed to the client.
+      // Doc IDs must be the Firebase Auth UIDs of the admins.
+      allow read, write: if isAdmin();
+    }
+  }
+}
