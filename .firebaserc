@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "event-202x"
-  }
+  },
+  "targets": {
+    "event-202x": {
+      "hosting": {
+        "event202x": [
+          "event202x"
+        ],
+        "event202x-admin": [
+          "event202x-admin"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

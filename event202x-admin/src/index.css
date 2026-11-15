@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  /* Prevents sticky navbar from overlapping section headers */
+}
+
+:root {
+  --bg-spruce: #0D1F17;
+  --nav-bg: #162E23;
+  --primary-mint: #34D399;
+  --sec-high: #059669;
+  --text-white: #ECFDF5;
+  --text-sec: #9CA3AF;
+}
+
+@theme {
+  --font-display: "Google Sans", sans-serif;
+
+  --bg-spruce: #0D1F17;
+  --nav-bg: #162E23;
+  --primary-mint: #34D399;
+  --sec-high: #059669;
+  --text-white: #ECFDF5;
+  --text-sec: #9CA3AF;
+}
