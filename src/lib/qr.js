@@ -315,7 +315,7 @@ function renderPassCard(registrant, qrImage) {
   ctx.fillStyle = C.ash;
   ctx.fillText("Scan at the entrance to record attendance", W / 2, 728);
 
-  const payload = buildQrPayload(registrant);
+  const payload = registrant.RegistrationID;
   let payloadSize = 11;
   setFont(ctx, { size: payloadSize, mono: true });
   while (ctx.measureText(payload).width > W - 72 && payloadSize > 8) {
