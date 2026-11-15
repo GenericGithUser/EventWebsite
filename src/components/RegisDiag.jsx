@@ -122,11 +122,15 @@ function PassContent({ registrant, close }) {
 
   // upload QR Pass
   useEffect(()=>{
-    const timer = setTimeout(()=>{
+    let cancelled = false;
+
+    const timer = setTimeout( async ()=>{
       const svg = qrWrapRef.current?.querySelector("svg");
-      if (!svg) return;
-      const uploadImg = async () =>{
+      if (!svg || cancelled) return;
+      
+      try {
         const passUrl = await uploadQrPassCard(registrant, svg);
+        if (cancelled) return;             // don't send if we unmounted mid-upload
 
         await emailjs.send(
           import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -142,11 +146,15 @@ function PassContent({ registrant, close }) {
           },
           { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
         );
-      };
-      uploadImg(); 
+      } catch (err) {
+        console.error("Failed to upload QR pass / send email:", err);
+      }
     }, 1500);
-    return () => clearTimeout(timer);
-  });
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, []);
 
   const handleCopyId = async () => {
     try {
