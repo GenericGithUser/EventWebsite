@@ -10,6 +10,9 @@
         ],
         "event202x-admin": [
           "event202x-admin"
+        ],
+        "event-202x": [
+          "event-202x"
         ]
       }
     }

@@ -7,7 +7,7 @@
   },
   "hosting": [
     {
-      "target": "event202x",
+      "target": "event-202x",
       "public": "dist",
       "ignore": [
         "firebase.json",
@@ -23,7 +23,7 @@
     },
     {
       "target": "event202x-admin",
-      "public": "admin/dist",
+      "public": "event202x-admin/dist",
       "ignore": [
         "firebase.json",
         "**/.*",
