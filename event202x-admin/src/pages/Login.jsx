@@ -1,6 +1,27 @@
 import { Lock } from "lucide-react";
+import { useState } from "react";
+import { useAuth } from "../lib/AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login(){
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+
+    const handleSubmit = async (e) =>{
+      e.preventDefault();
+      try {
+        setError("");
+        await login(email, password);
+
+      } catch (err) {
+        setError("Failed to Login " + err);
+      }
+    }
+
     return (
       <>
         <div className="loginPage flex w-screen h-screen">
@@ -10,7 +31,7 @@ export default function Login(){
               Event202X - Admin Page
             </h2>
             <form
-              action=""
+              onSubmit={handleSubmit}
               className="mainForm flex flex-col gap-4 mt-10 justify-center items-center w-[30vw] min-h-[20vw] m-auto bg-(--sec-high) p-5 border-4 border-(--nav-bg) rounded-xl shadow-md shadow-cyan-300"
             >
                 <Lock size={50}/>
@@ -20,7 +41,10 @@ export default function Login(){
                   type="email"
                   name="Email"
                   id="logEmail"
+                  value={email}
+                  onChange={(e)=> setEmail(e.target.value)}
                   className="bg-green-100 w-[23vw] text-xl text-black p-1.5 border-2 border-green-800 rounded-xl outline-0 transition-all transition-duration-100 focus:border-amber-100"
+                  required
                 />
               </div>
               <div className="logItem flex flex-col ">
@@ -29,7 +53,10 @@ export default function Login(){
                   type="password"
                   name="Password"
                   id="logPassword"
+                  value={password}
+                  onChange={(e)=> setPassword(e.target.value)}
                   className="bg-green-100 w-[23vw] text-xl text-black p-1.5 border-2 border-green-800 rounded-xl outline-0 transition-all transition-duration-100 focus:border-amber-100"
+                  required
                 />
               </div>
               <input type="submit" value="LOGIN" className="bg-cyan-500 font-bold text-2xl p-3 w-[23vw] cursor-pointer rounded-xl hover:bg-(--primary-mint) hover:scale-110 active:bg-(--nav-bg) transition-all transition-duration-3"/>

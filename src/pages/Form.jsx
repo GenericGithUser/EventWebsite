@@ -40,7 +40,7 @@ function Form() {
           Name: signUpDetails.Name,
           Age: Number(signUpDetails.Age),
           Email: email,
-          EmailSent: false,
+          EmailSent: true,
           hasAttended: false,
         });
         transaction.update(counter, { currentValue: next });

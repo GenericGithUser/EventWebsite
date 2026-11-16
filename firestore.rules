@@ -80,7 +80,7 @@ service cloud.firestore {
       allow create: if validSignupData(request.resource.data)
         && 'RegistrationID' in request.resource.data.keys()
         && request.resource.data.RegistrationID.matches('^EVE-[0-9]{3,}$')
-        && request.resource.data.EmailSent == false
+        && request.resource.data.EmailSent == true
         && request.resource.data.hasAttended == false
         && signupId == request.resource.data.Email
         && !exists(/databases/$(database)/documents/EventSignUps/$(request.resource.data.Email));
