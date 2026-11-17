@@ -86,14 +86,13 @@ function Details({ }) {
 
     return (
       <>
-        <header className="navBar flex flex-row justify-around items-center w-[80vw] h-15 bg-(--nav-bg) p-4 left-0 mt-5 m-auto  border-amber-100 border-2 rounded-xl">
-          <h2 className="font-bold text-3xl text-amber-100">
-            {" "}
+        <header className="navBar flex flex-row justify-around items-center w-[80vw] h-15 bg-(--nav-bg) p-4 left-0 mt-5 m-auto  border-amber-100 border-2 rounded-xl max-[500px]:w-screen ">
+          <h2 className="font-bold text-3xl max-[600px]:text-2xl text-amber-100 max-[500px]:text-center max-[500px]:text-xl">
             Event 202X Registrant's Details{" "}
           </h2>
         </header>
 
-        <div className="passCont flex justify-center items-center mt-2 mb-10 p-4 bg-amber-200 w-[70vw] ml-auto mr-auto rounded-2xl border-3 border-(--primary-mint)">
+        <div className="passCont flex justify-center items-center mt-2 mb-10 p-4 bg-amber-200 w-[70vw] ml-auto mr-auto rounded-2xl border-3 border-(--primary-mint) max-[800px]:w-[90vw] max-[800px]:h-[110vh] max-[500px]:p-2 ">
           <div className="custom-scrollbar relative max-h-[min(92vh,760px)] w-full max-w-lg overflow-y-auto rounded-2xl border border-(--primary-mint)/20 bg-(--nav-bg) shadow-[0_25px_70px_-15px_rgba(13,31,23,0.9)]">
             {/* Accent strip */}
             <div
@@ -249,10 +248,9 @@ function Details({ }) {
               </button>
               <button
                 type="button"
-                onClick={()=> goBack()}
+                onClick={() => goBack()}
                 className="cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg bg-(--primary-mint) px-4 py-2.5 text-sm font-semibold text-spruce transition-colors hover:bg-(--primary-mint)/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream"
               >
-                
                 Go Back?
               </button>
             </div>

@@ -48,7 +48,7 @@ function Landing() {
                 after:absolute after:inset-0 after:pointer-events-none
                 after:bg-[radial-gradient(circle,transparent_40%,rgba(0,0,0,0.4)_100%)] "
         >
-          <h1 className="text-7xl font-bold mt-20">
+          <h1 className="text-7xl font-bold mt-20 max-md:text-center max-[500px]:text-5xl">
             The Greatest Event of All Time
           </h1>
           <Link
@@ -57,19 +57,19 @@ function Landing() {
           >
             Sign Up NOW!
           </Link>
-          <p>Or</p>
+          <p className="max-md:-mt-2 max-[350px]:-mt-4">Or</p>
           <div className="searchEmail">
-            <h2 className="text-2xl font-bold -mt-3 text-center">
+            <h2 className="text-2xl font-bold -mt-3 text-center max-md:-mt-7">
               Check Your Registration Details
             </h2>
             <p className="text-center">Enter your Email Here!</p>
-            <div className="searchEmailBox flex gap-4">
+            <div className="searchEmailBox flex gap-4 justify-center">
               <input
                 type="email"
                 name="Email"
                 id="emailBox"
                 value={checkEmail}
-                className="bg-green-100 text-black w-[30vw] text-[1rem] p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100"
+                className="bg-green-100 text-black w-[30vw] text-[1rem] p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100 max-[500px]:w-[60vw]"
                 onChange={(e) => setCheckEmail(e.target.value)}
               />
               <button
@@ -84,10 +84,10 @@ function Landing() {
           <p>To Learn More, Scroll Down</p>
           <FaCircleArrowDown className="animate-bounce text-6xl" />
         </section>
-        <section id="about" className="p-5 flex flex-col gap-4">
+        <section id="about" className="p-5 flex flex-col gap-4 justify-center items-center max-[400px]:p-2">
           <article
             className="about w-[96vw] border-(--sec-high) border-2 rounded-xl p-5 m-auto text-2xl bg-(--nav-bg) 
-                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3"
+                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3 max-md:text-xl max-md:flex-col-reverse"
           >
             <p>
               The wait is finally over, and the single most monumental gathering
@@ -111,7 +111,7 @@ function Landing() {
           </article>
           <article
             className="about w-[96vw] border-(--sec-high) border-2 rounded-xl p-5 m-auto text-2xl bg-(--nav-bg) 
-                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3"
+                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3 max-md:text-xl max-md:flex-col-reverse"
           >
             <img
               src="../about_img2.webp"
@@ -134,7 +134,7 @@ function Landing() {
           </article>
           <article
             className="about w-[96vw] border-(--sec-high) border-2 rounded-xl p-5 m-auto text-2xl bg-(--nav-bg) 
-                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3"
+                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3 max-md:text-xl max-md:flex-col-reverse"
           >
             <p>
               Imagine standing in an arena pulsing with unmatched energy,
@@ -154,7 +154,7 @@ function Landing() {
           </article>
           <article
             className="about w-[96vw] border-(--sec-high) border-2 rounded-xl p-5 m-auto text-2xl bg-(--nav-bg) 
-                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3"
+                shadow-lg shadow-(--text-sec)/90 flex flex-row gap-3 max-md:text-xl max-md:flex-col-reverse"
           >
             <img
               src="../about_img4.webp"
@@ -174,7 +174,7 @@ function Landing() {
               <br />
               <Link
                 to="/sign-up"
-                className="cursor-pointer bg-(--primary-mint) p-2 font-bold text-2xl rounded transition-all duration-300 ease-in-out hover:bg-(--sec-high) hover:scale-105"
+                className="cursor-pointer bg-(--primary-mint) p-2 font-bold text-2xl rounded transition-all duration-300 ease-in-out hover:bg-(--sec-high) hover:scale-105 md:mb-10"
               >
                 Sign Up NOW!
               </Link>
@@ -185,10 +185,10 @@ function Landing() {
       <Footer />
       <Toaster
         toastOptions={{
-            style: {
-              background: "#91baa6",
-              color: "#ECFDF5"
-            },
+          style: {
+            background: "#91baa6",
+            color: "#ECFDF5",
+          },
         }}
       />
     </div>

@@ -122,7 +122,7 @@ function PassContent({ registrant, close }) {
 
   // upload QR Pass
   useEffect(()=>{
-    let cancelled = false;
+    let cancelled = false; // set to true for dev mode
 
     const timer = setTimeout( async ()=>{
       const svg = qrWrapRef.current?.querySelector("svg");

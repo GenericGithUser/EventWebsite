@@ -1,9 +1,10 @@
 import AttendeeDialog from "../components/AttendeeDialog";
 import { useState } from "react";
 import QrReader from "../components/QrReader";
-import { QrCode } from "lucide-react";
+import { QrCode, Home } from "lucide-react";
 import { checkInFromQr } from "../lib/helpers";
 import toast, {Toaster} from "react-hot-toast"
+import { Link } from "react-router-dom";
 
 export default function Scanner(){
     const [data, setData] = useState(null);
@@ -38,7 +39,7 @@ export default function Scanner(){
 
     return (
       <>
-        <div className="scan mt-15 p-4 w-[85vw]">
+        <div className="scan mt-15 p-4 w-[85vw] max-[700px]:w-screen max-[400px]:p-0">
           <h1 className="text-3xl font-bold text-center text-amber-100 mb-2">
             Scan QR Passes
           </h1>
@@ -66,7 +67,7 @@ export default function Scanner(){
               <>
                 <div className="qrReady mt-10 flex flex-col items-center justify-center">
                   <QrReader onResult={handleResult} />
-                  <p>Point Directly at QR Code Pass</p>
+                  <p className="mb-10">Point Directly at QR Code Pass</p>
                   <button
                     type="button"
                     className="p-1 text-4xl bg-red-400 w-50 font-bold rounded-xl cursor-pointer transition-all transition-duration-3 hover:bg-amber-200 hover:scale-105"
@@ -78,6 +79,13 @@ export default function Scanner(){
               </>
             )}
           </div>
+          <Link
+            to={"/home"}
+            className="scanBtn absolute bottom-5 right-5 bg-amber-900 p-1 rounded-4xl min-[700px]:hidden "
+            replace
+          >
+            <Home size={40} />
+          </Link>
         </div>
         <AttendeeDialog
           isOpen={isDialogOpen}

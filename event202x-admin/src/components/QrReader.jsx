@@ -39,5 +39,10 @@ export default function QrReader({ onResult }){
 
     }, []);
 
-    return <video ref={videoRef} className="w-[40vw]" />;
+    return (
+      <video
+        ref={videoRef}
+        className="w-[40vw] max-[700px]:w-[80vw] max-[500px]:w-[95vw]"
+      />
+    );
 }

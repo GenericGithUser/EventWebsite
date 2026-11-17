@@ -66,64 +66,70 @@ function Form() {
 
     return (
       <>
-        <header className="navBar flex flex-row justify-around items-center w-[80vw] h-15 bg-(--nav-bg) p-4 left-0 mt-5 m-auto  border-amber-100 border-2 rounded-xl">
-          <h2 className="font-bold text-3xl text-amber-100">
+        <header className="navBar flex flex-row justify-around items-center w-[80vw] h-15 bg-(--nav-bg) p-4 left-0 mt-5 m-auto  border-amber-100 border-2 rounded-xl max-[500px]:w-screen ">
+          <h2 className="font-bold text-3xl max-[600px]:text-2xl text-amber-100 max-[500px]:text-center max-[500px]:text-xl">
             {" "}
             Event 202X Registration Form{" "}
           </h2>
         </header>
         <section
-          className="formProper w-[96vw] border-(--sec-high) border-2 rounded-xl p-5 m-auto text-2xl bg-(--nav-bg) 
+          className="formProper w-[96vw] border-(--sec-high) border-2 rounded-xl p-5 m-auto text-2xl max-[600px]:text-[3ch] bg-(--nav-bg) 
                 shadow-2xl shadow-(--text-sec)/90 mt-5 mb-10"
         >
           <form
             action=""
             onSubmit={handleFormSubmit}
-            className="dataForm flex flex-col justify-center items-center gap-4"
+            className="dataForm flex flex-col justify-center items-center gap-4 max-[450px]:items-baseline"
           >
-            <div className="fCont flex gap-5 items-center ">
-              <label htmlFor="usrName">Full Name: </label>
+            <div className="fCont flex gap-5 items-center max-[600px]:gap-2 max-[450px]:flex-col max-[450px]:items-baseline">
+              <label htmlFor="usrName" className="max-[450px]:text-xl">
+                Full Name:{" "}
+              </label>
               <input
                 type="text"
                 name="Name"
                 id="usrName"
                 required
-                className="bg-green-100 text-black w-xl text-xl p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100"
+                className="bg-green-100 text-black w-xl max-[820px]:w-[50vw] max-[450px]:w-[70vw] text-xl p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100 max-[400px]:text-lg max-[400px]:w-[80vw]"
               />
             </div>
-            <div className="fXlCont flex flex-row gap-5">
-              <div className="fCont flex gap-5">
-                <label htmlFor="usrAge">Age: </label>
+            <div className="fXlCont flex flex-row gap-5 max-[450px]:flex-col">
+              <div className="fCont flex gap-5 max-[600px]:gap-2 ">
+                <label htmlFor="usrAge" className="max-[450px]:text-xl">
+                  Age:{" "}
+                </label>
                 <input
                   type="number"
                   name="Age"
                   id="usrAge"
                   required
-                  className="bg-green-100 text-black w-[10vw] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-xl p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100"
+                  className="bg-green-100 text-black w-[10vw] max-[450px]:w-[20vw] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-xl p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100"
                 />
               </div>
-              <div className="fCont flex gap-5">
-                <label htmlFor="usrEmail">Email: </label>
+              <div className="fCont flex gap-5 max-[600px]:gap-2">
+                <label htmlFor="usrEmail" className="max-[450px]:text-xl">
+                  Email:{" "}
+                </label>
                 <input
                   type="email"
                   name="Email"
                   id="usrEmail"
                   required
-                  className="bg-green-100 text-black w-[30vw] text-xl p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100"
+                  className="bg-green-100 text-black w-[30vw] max-[820px]:w-[40vw] max-[450px]:w-[60vw] text-xl p-1.5 rounded-xl border-2 border-(--primary-mint) outline-none focus:ring-2 focus:ring-amber-100 transition-all duration-100 max-[400px]:text-lg max-[400px]:w-[65vw]"
                 />
               </div>
             </div>
             <input
               type="submit"
               value="Submit"
-              className="bg-(--primary-mint) p-2 text-3xl rounded-xl pl-20 pr-20 font-bold cursor-pointer hover:scale-105 hover:bg-(--sec-high) transition-all duration-100"
+              className="bg-(--primary-mint) p-2 text-3xl rounded-xl pl-20 pr-20 font-bold cursor-pointer hover:scale-105 hover:bg-(--sec-high) transition-all duration-100 max-md:mt-10 max-[600px]:text-2xl max-[600px]:pl-15 max-[600px]:pr-15 m-auto"
             />
           </form>
           <div className="cancelCont flex items-center justify-center mt-4">
             <button
               type="button"
-              className="bg-red-400 p-2 text-3xl rounded-xl pl-20 pr-20 font-bold cursor-pointer hover:scale-105 hover:bg-red-600 transition-all duration-100"
-              onClick={()=>navigate("/")}
+              className="bg-red-400 p-2 text-3xl rounded-xl pl-20 pr-20 font-bold cursor-pointer hover:scale-105 hover:bg-red-600 transition-all duration-100 max-[600px]:text-2xl max-[600px]:pl-15 max-[600px]:pr-15"
+              onClick={() => navigate("/")}
             >
               Cancel?
             </button>

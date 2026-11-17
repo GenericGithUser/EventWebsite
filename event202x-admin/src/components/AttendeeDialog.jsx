@@ -39,7 +39,7 @@ export default function AttendeeDialog({ isOpen, close, data }) {
   return (
     <>
       <dialog
-        className="w-[30vw] h-[25vw] bg-(--bg-spruce) border-2 border-(--sec-high) text-(--text-white) m-auto rounded-lg p-6 shadow-md shadow-cyan-400"
+        className="w-[30vw] h-[35vw] bg-(--bg-spruce) border-2 border-(--sec-high) text-(--text-white) m-auto rounded-lg p-6 shadow-md shadow-cyan-400 max-[800px]:w-[50vw] max-[800px]:h-[60vh] max-[550px]:w-[70vw] max-[400px]:w-[90vw]"
         ref={dialogRef}
       >
         <XSquare className="ml-auto cursor-pointer" onClick={() => close()} />
@@ -96,7 +96,6 @@ export default function AttendeeDialog({ isOpen, close, data }) {
           )}
         </div>
       </dialog>
-      
     </>
   );
 }
